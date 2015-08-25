@@ -38,6 +38,38 @@
             $this->assertEquals($result, $course_name);
         }
 
+        function testSetCourseName()
+        {
+            //Arrange
+            $course_name = "History";
+            $crn = "HIST101";
+            $id = 1;
+            $test_course = new Course($course_name, $crn, $id);
+
+            //Act
+            $test_course->setCourseName("Economics");
+            $result = $test_course->getCourseName();
+
+            //Assert
+            $this->assertEquals("Economics", $result);
+        }
+
+        function testSetCRN()
+        {
+            //Arrange
+            $course_name = "History";
+            $crn = "HIST101";
+            $id = 1;
+            $test_course = new Course($course_name, $crn, $id);
+
+            //Act
+            $test_course->setCRN("ECON101");
+            $result = $test_course->getCRN();
+
+            //Assert
+            $this->assertEquals("ECON101", $result);
+        }
+
         function test_getCRN() {
 
             //Arrange
@@ -84,6 +116,45 @@
 
             //Assert
             $this->assertEquals([$test_course], $result);
+        }
+
+        function testUpdate () {
+            //Arrange
+            $course_name = "History";
+            $id = 1;
+            $crn = "HIST101";
+            $test_course = new Course($course_name, $crn, $id);
+            $test_course->save();
+
+            $new_course_name = "Economics";
+
+            //Act
+            $test_course->update($new_course_name);
+
+            //Assert
+            $this->assertEquals("Economics", $test_course->getCourseName());
+        }
+
+        function testDeleteCourse()
+        {
+            //Arrange
+            $course_name = "Economics";
+            $id = 1;
+            $crn = "ECON101";
+            $test_course = new Course($course_name, $crn, $id);
+            $test_course->save();
+
+            $course_name2 = "History";
+            $id2 = 2;
+            $crn2 = "HIST101";
+            $test_course2 = new Course($course_name, $crn2, $id2);
+            $test_course2->save();
+
+            //Act
+            $test_course->deleteOne();
+            
+            //Assert
+            $this->assertEquals([$test_course2], Course::getAll());
         }
 
         //Test getAll:

@@ -31,11 +31,50 @@ class Student {
         return $this->id;
     }
 
+    //Add a course to a student:
+    function addCourse($course){
+        $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id)
+                    VALUES ({$course->getId()}, {$this->getId()});");
+    }
+
+    //Get all courses assigned to a student:
+    //This method is UNFINISHED.
+    function getCourses() {
+        //join statement
+        $found_courses = $GLOBALS['DB']->query("SELECT courses.* FROM
+        students JOIN students_courses ON (students.id = students_courses.student_id)
+                 JOIN courses ON (students_courses.course_id = courses.id)
+                 WHERE (students.id = {$this->getId()});");
+         //convert output of the join statement into an array
+         $found_courses = $found_courses->fetchAll(PDO::FETCH_ASSOC);
+         $student_courses = array();
+         foreach($found_courses as $found_course) {
+             $course_name = $found_course['course_name'];
+             $id = $found_course['id'];
+             $crn = $found_course['crn'];
+             $new_course = new Course($course_name, $crn, $id);
+             array_push($student_courses, $new_course);
+         }
+         return $student_courses;
+    }
+
     //Save a student to students table:
     function save() {
         $statement = $GLOBALS['DB']->exec("INSERT INTO students (student_name, enroll_date)
                         VALUES ('{$this->getStudentName()}', '{$this->getEnrollDate()}');");
         $this->id = $GLOBALS['DB']->lastInsertId();
+    }
+
+    //change student name
+    function update($new_student_name) {
+        $GLOBALS['DB']->exec("UPDATE students SET student_name = '{$new_student_name}' WHERE id = {$this->getId()};");
+        $this->setStudentName($new_student_name);
+    }
+
+    //delete one student
+    function deleteOne() {
+        $GLOBALS['DB']->exec("DELETE FROM students WHERE id = {$this->getId()};");
+        $GLOBALS['DB']->exec("DELETE FROM students_courses WHERE student_id = {$this->getId()};");
     }
 
     //Clear all students from students table:
@@ -67,25 +106,6 @@ class Student {
         $id = $found_student[0]['id'];
         $new_student = new Student($student_name, $enroll_date, $id);
         return $new_student;
-    }
-
-    //Add a course to a student:
-    function addCourse($course){
-        $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id)
-                    VALUES ({$course->getId()}, {$this->getId()});");
-    }
-
-    //Get all courses assigned to a student:
-    //This method is UNFINISHED.
-    function getCourses() {
-
-        
-
-
-        $found_courses = $GLOBALS['DB']->query("SELECT courses.* FROM
-        students JOIN students_courses ON (students.id = students_courses.student_id)
-                 JOIN courses ON (students_courses.course_id = courses.id)
-                 WHERE (students.id = {$this->getId()});");
     }
 
 
