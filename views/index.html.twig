@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/../main.css">
+        <title>University Registrar</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Welcome to the University Registrar</h2>
+            <div class="row">
+                <div class="col-xs-6" style="text-align:center;">
+                    <form action='/students' method='get'>
+                        <button class="btn btn-default" type='submit'>Students</button>
+                    </form>
+                    <p>Edit or view Students</p>
+                </div>
+                <div class="col-xs-6" style="text-align:center;">
+                    <form action='/courses' method='get'>
+                        <button class="btn btn-default" style="padding-right:20px;padding-left:20px;" type='submit'>Courses</button>
+                    </form>
+                    <p>Edit or view Courses</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

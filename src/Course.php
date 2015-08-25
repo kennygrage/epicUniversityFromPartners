@@ -63,6 +63,10 @@
             $this->setCourseName($new_course_name);
         }
 
+        function updateCRN($new_crn) {
+            $GLOBALS['DB']->exec("UPDATE courses set crn = '{$new_crn}' WHERE id = {$this->getId()};");
+        }
+
         function addStudent($student) {
             $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id) VALUES ({$this->getId()}, {$student->getId()});");
         }

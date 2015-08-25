@@ -1,0 +1,53 @@
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/../main.css">
+    <title>University Registrar</title>
+</head>
+<body>
+    <div class="container">
+        <h2>{{ course.getCourseName }}</h2>
+
+        {% if students is not empty %}
+            <p>Here are the students for this course:</p>
+            <ul class="list-group">
+                {% for student in students %}
+                    <li class="list-group-item">{{ student.getStudentName }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <h4>Add a student to this course:</h4>
+
+        <div class="form-group">
+            <form action='/add_students' method='post'>
+                <input id="course_id" name="course_id" type="hidden" value="{{ course.getId }}">
+                <label for="student_id">Select a student</label>
+                <select id='student_id' name='student_id' type='text'>
+                  {% for student in all_students %}
+                    <option value="{{ student.getId }}"> {{ student.getStudentName }} </option>
+                  {% endfor %}
+                </select>
+                <button class="btn btn-default" type='submit'>Add Student</button>
+            </form>
+        </div>
+
+        <h4>Edit this course:</h4>
+        <div class="form-group">
+            <form action='/courses/{{ course.getId }}/edit' method='post'>
+                <label for='course_name'>Course Name</label>
+                <input id='course_name' name='course_name' type='text'>
+                <label for='crn'>CRN</label>
+                <input id='crn' name='crn' type='text'>
+
+                <button class="btn btn-default" type='submit'>Edit Course</button>
+
+                <a href='/courses/{{ course.getId }}/delete'>Delete Course</a>
+            </form>
+        </div>
+
+        <p><a href='/'>Home</a></p>
+        <p><a href='/courses'>Courses</a></p>
+    </div>
+</body>
+</html>

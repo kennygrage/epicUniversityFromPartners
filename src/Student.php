@@ -71,6 +71,10 @@ class Student {
         $this->setStudentName($new_student_name);
     }
 
+    function updateEnroll($new_enroll_date) {
+        $GLOBALS['DB']->exec("UPDATE students set enroll_date = '{$new_enroll_date}' WHERE id = {$this->getId()};");
+    }
+
     //delete one student
     function deleteOne() {
         $GLOBALS['DB']->exec("DELETE FROM students WHERE id = {$this->getId()};");

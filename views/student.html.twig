@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/../main.css">
+        <title>University Registrar</title>
+    </head>
+    <body>
+        <div class="container">
+            <h2>{{ student.getStudentName }}</h2>
+
+            {% if courses is not empty %}
+            <p>Here are the courses for this student:</p>
+            <ul class="list-group">
+                {% for course in courses %}
+                    <li class="list-group-item">{{ course.getCourseName }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <h4>Add a course to this student:</h4>
+            <div class="form-group">
+                <form action="/add_courses" method="post">
+                    <input type="hidden" name="student_id" id ="student_id" value="{{ student.getId }}">
+                    <label for="course_id">Select a course</label>
+                    <select id="course_id" name="course_id" type="text">
+                        {% for course in all_courses %}
+                            <option value="{{ course.getId }}"> {{ course.getCourseName }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-default" type="submit">Add course</button>
+                </form>
+            </div>
+
+            <h4>Edit this student:</h4>
+            <div class="form-group">
+                <form action='/students/{{ student.getId }}/edit' method='post'>
+                    <label for='student_name'>Student Name</label>
+                    <input id='student_name' name='student_name' type='text'>
+                    <label for='enroll_date'>Enrollment Date</label>
+                    <input id='enroll_date' name='enroll_date' type='date'>
+
+                    <button class="btn btn-default" type='submit'>Edit Student</button>
+
+                    <a href='/students/{{ student.getId }}/delete'>Delete Student</a>
+                </form>
+            </div>
+            <p><a href='/students'>Students</a></p>
+        </div>
+    </body>
+</html>
