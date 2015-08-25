@@ -79,6 +79,8 @@ class Student {
     //This method is UNFINISHED.
     function getCourses() {
 
+        
+
 
         $found_courses = $GLOBALS['DB']->query("SELECT courses.* FROM
         students JOIN students_courses ON (students.id = students_courses.student_id)
