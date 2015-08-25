@@ -68,6 +68,20 @@ class Student {
         return $new_student;
     }
 
+    //Add a course to a student:
+    function addCourse($course){
+        $GLOBALS['DB']->exec("INSERT INTO students_courses (course_id, student_id)
+                    VALUES ({$course->getId()}, {$this->getId()});");
+    }
+
+    //Get all courses assigned to a student:
+    function getCourses() {
+        $GLOBALS['DB']->exec("SELECT courses.* FROM 
+        students JOIN students_courses ON (students.id = students_courses.student_id)
+                JOIN courses ON (students_courses.course_id = courses.id)
+                WHERE (courses.id = );");
+    }
+
 
 
 }

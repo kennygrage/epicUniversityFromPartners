@@ -7,6 +7,7 @@
 
     //Linking class for testing
     require_once "src/Student.php";
+    require_once "src/Course.php";
 
     //Setting server up to apache and mysql passwords.
     $server = 'mysql:host=localhost;dbname=registrar_test';
@@ -19,6 +20,7 @@
         //Clears data for next test after each test
         protected function tearDown() {
             Student::deleteAll();
+            Course::deleteAll();
         }
 
 
@@ -169,6 +171,26 @@
         }
 
         //Test add course to student
+        function test_addCourse(){
+            //Arrange
+            $course_name = "MTH101";
+            $crn = 1234;
+            $id = 1;
+            $test_course = new Course($course_name, $crn, $id);
+            $test_course->save();
+
+            $student_name = "Bob";
+            $enroll_date = "2012-10-20";
+            $id2 = 2;
+            $test_student = new Student($student_name, $enroll_date, $id2);
+            $test_student->save();
+
+            //Act
+            $test_student->addCourse($test_course);
+
+            //Assert
+            $this->assertEquals($test_student->getCourses(), [$test_course]);
+        }
 
 
 
