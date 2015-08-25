@@ -30,16 +30,19 @@ class Student {
         return $this->id;
     }
 
+    //Save a student to students table:
     function save() {
         $statement = $GLOBALS['DB']->exec("INSERT INTO students (student_name, enroll_date)
                         VALUES ('{$this->getStudentName()}', '{$this->getEnrollDate()}');");
         $this->id = $GLOBALS['DB']->lastInsertId();
     }
 
+    //Clear all students from students table:
     static function deleteAll(){
         $GLOBALS['DB']->exec("DELETE FROM students;");
     }
 
+    //Retrieve all students from students table:
     static function getAll(){
         $returned_students = $GLOBALS['DB']->query("SELECT * FROM students;");
         $students = array();
@@ -51,6 +54,17 @@ class Student {
             array_push($students, $new_student);
         }
         return $students;
+    }
+
+    //Find students by id in students table:
+    static function find($search_id){
+        $search_student = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$search_id}");
+        $found_student = $search_student->fetchAll(PDO::FETCH_ASSOC);
+        $student_name = $found_student[0]['student_name'];
+        $enroll_date = $found_student[0]['enroll_date'];
+        $id = $found_student[0]['id'];
+        $new_student = new Student($student_name, $enroll_date, $id);
+        return $new_student;
     }
 
 

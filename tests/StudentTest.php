@@ -124,6 +124,52 @@
             $this->assertEquals([$test_student, $test_student2], $result);
         }
 
+        //Test deleteAll:
+        function test_deleteAll(){
+            //Arrange
+            $student_name = "Bob";
+            $enroll_date = "2012-10-20";
+            $id = null;
+            $test_student = new Student($student_name, $enroll_date, $id);
+            $test_student->save();
+
+            $student_name2 = "Sue";
+            $enroll_date2 = "2013-09-09";
+            $test_student2 = new Student($student_name2, $enroll_date2, $id);
+            $test_student2->save();
+
+            //Act
+            Student::deleteAll();
+            $result = Student::getAll();
+
+            //Assert
+            $this->assertEquals([], $result);
+        }
+
+        //Test find:
+        function test_find(){
+            //Arrange
+            $student_name = "Bob";
+            $enroll_date = "2012-10-20";
+            $id = null;
+            $test_student = new Student($student_name, $enroll_date, $id);
+            $test_student->save();
+
+            $student_name2 = "Sue";
+            $enroll_date2 = "2013-09-09";
+            $test_student2 = new Student($student_name2, $enroll_date2, $id);
+            $test_student2->save();
+
+            //Act
+            $id = $test_student->getId();
+            $result = Student::find($id);
+
+            //Assert
+            $this->assertEquals($test_student, $result);
+        }
+
+
+
 
 
 
