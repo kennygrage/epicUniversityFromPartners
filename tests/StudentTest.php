@@ -23,24 +23,6 @@
             Course::deleteAll();
         }
 
-
-        //Testing getters and setters
-        // function test_setStudentName() {
-        //     //Arrange
-        //     $student_name = "Bob";
-        //     $enroll_date = "2012-10-20";
-        //     $id = 1;
-        //     $test_student = new Student($student_name, $enroll_date, $id);
-        //     $test_student->save();
-        //
-        //     //Act
-        //     $new_name = "Sue";
-        //     $result = $test_student->setStudentName($new_name);
-        //
-        //     //Assert
-        //     $this->assertEquals($result, $new_name);
-        // }
-
         //Test getters:
         function test_getStudentName() {
 
@@ -191,11 +173,6 @@
             //Assert
             $this->assertEquals($test_student->getCourses(), [$test_course]);
         }
-
-
-
-
-
 
     }
 

@@ -1,5 +1,6 @@
 <?php
 
+//Currently working out JOIN statements for the getCourses method.
 
 class Student {
 
@@ -75,11 +76,14 @@ class Student {
     }
 
     //Get all courses assigned to a student:
+    //This method is UNFINISHED.
     function getCourses() {
-        $GLOBALS['DB']->exec("SELECT courses.* FROM 
+
+
+        $found_courses = $GLOBALS['DB']->query("SELECT courses.* FROM
         students JOIN students_courses ON (students.id = students_courses.student_id)
-                JOIN courses ON (students_courses.course_id = courses.id)
-                WHERE (courses.id = );");
+                 JOIN courses ON (students_courses.course_id = courses.id)
+                 WHERE (students.id = {$this->getId()});");
     }
 
 
