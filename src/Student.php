@@ -57,6 +57,7 @@ class Student {
     }
 
     //Find students by id in students table:
+    //Built finder with DB query string instead of foreach loop.  It works :P
     static function find($search_id){
         $search_student = $GLOBALS['DB']->query("SELECT * FROM students WHERE id = {$search_id}");
         $found_student = $search_student->fetchAll(PDO::FETCH_ASSOC);
